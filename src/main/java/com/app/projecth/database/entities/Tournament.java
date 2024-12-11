@@ -1,7 +1,10 @@
 package com.app.projecth.database.entities;
 
+import com.app.projecth.enums.TournamentType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,8 +31,12 @@ public class Tournament {
     @NotBlank
     private LocalDateTime createdAt;
 
+    @Enumerated(EnumType.STRING)
+    @NotBlank
+    private TournamentType type;
+
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Phase> phases;
+    private List<Group> groups = new ArrayList<>();
 
     public Tournament() {
         this.createdAt = LocalDateTime.now();
@@ -66,11 +74,19 @@ public class Tournament {
         this.createdAt = createdAt;
     }
 
-    public List<Phase> getPhases() {
-        return phases;
+    public TournamentType getType() {
+        return type;
     }
 
-    public void setPhases(List<Phase> phases) {
-        this.phases = phases;
+    public void setType(TournamentType type) {
+        this.type = type;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 }

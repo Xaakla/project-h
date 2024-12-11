@@ -1,6 +1,6 @@
 package com.app.projecth.enums;
 
-public enum PhaseType {
+public enum TournamentType {
     POINTS,
     GROUP_STAGE,
     KNOCKOUT

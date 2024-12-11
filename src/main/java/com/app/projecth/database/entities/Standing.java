@@ -7,30 +7,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.OneToOne;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Round {
+public class Standing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    private String name;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @OneToMany(mappedBy = "round", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Match> matches;
+    @OneToMany(mappedBy = "standing", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TeamStats> teams = new ArrayList<>();
 
-    public Round() {
+    public Standing() {
     }
 
     public Long getId() {
@@ -41,14 +38,6 @@ public class Round {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Group getGroup() {
         return group;
     }
@@ -57,11 +46,11 @@ public class Round {
         this.group = group;
     }
 
-    public List<Match> getMatches() {
-        return matches;
+    public List<TeamStats> getTeams() {
+        return teams;
     }
 
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
+    public void setTeams(List<TeamStats> teams) {
+        this.teams = teams;
     }
 }
